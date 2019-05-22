@@ -13,24 +13,24 @@ int main(int argc, char *argv[])
     QMap <QString, int> map;   
     QFile file(filePath);
 
-    // CH10 chip 0
+    // CH10 chip 0 - Erase
     int value10= QRandomGenerator::global()->bounded(100);
-    qInfo() << "CH10 chip 0: " << value10;    
+    qInfo() << "Erase CH10 chip 0: " << value10;    
     map.insert("Error at Line23 Repeat-44-Line24: Erase Multichip Fail CH10 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E1 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value10);
     
-    // CH1 chip 4
+    // CH1 chip 4 - Erase
     int value1 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "CH1 chip 4: " << value1;
+    qInfo() << "Erase CH1 chip 4: " << value1;
     map.insert("Error at Line23 Repeat-2031-Line24: Erase Multichip Fail CH1 (Status CH0:E0 E0,CH1:E0 E1,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value1);
 
-    // CH15 chip 0 & 4
+    // CH15 chip 0 & 4 - Program
     int value15 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "CH15 chip 0 & 4: " << value15;
+    qInfo() << "Program CH15 chip 0 & 4: " << value15;
     map.insert("Error at Line29 Repeat-2924-Line30: Block Program Multichip Fail CH15 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E1 E1)", value15);
 
-    // CH9 chip 0
+    // CH9 chip 0 - Erase
     int value9 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "CH9 chip 0: " << value9;
+    qInfo() << "Erase CH9 chip 0: " << value9;
     map.insert("Error at Line23 Repeat-1482-Line24: Erase Multichip Fail CH9 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E1 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value9);
 
 
