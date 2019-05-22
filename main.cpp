@@ -7,10 +7,12 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-
-    QMap <QString, int> map;
+    QString filePath = "G:\\test.rst";
     
+    QCoreApplication a(argc, argv);
+    QMap <QString, int> map;   
+    QFile file(filePath);
+
     // CH10 chip 0
     int value10= QRandomGenerator::global()->bounded(100);
     qInfo() << "CH10 chip 0: " << value10;    
@@ -31,8 +33,7 @@ int main(int argc, char *argv[])
     qInfo() << "CH9 chip 0: " << value9;
     map.insert("Error at Line23 Repeat-1482-Line24: Erase Multichip Fail CH9 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E1 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value9);
 
-    QString filePath = "G:\\test.rst";
-    QFile file(filePath);
+
 
     // Remove old report if it exists
     file.remove();
