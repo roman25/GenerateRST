@@ -4,36 +4,131 @@
 #include <QRandomGenerator>
 #include <QDebug>
 #include <QFile>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
-    QString filePath = "G:\\test.rst";
-    
+    QString fileName = QString(argv[1]);
+
+    //QString fileName = "test.rst";    
+    QString currDir = QDir::currentPath();
+    QString filePath = currDir + "/" + fileName;
+
     QCoreApplication a(argc, argv);
-    QMap <QString, int> map;   
+    QMap <int, int> map; // <Error code, Count>
     QFile file(filePath);
 
-    // CH10 chip 0 - Erase
-    int value10= QRandomGenerator::global()->bounded(100);
-    qInfo() << "Erase CH10 chip 0: " << value10;    
-    map.insert("Error at Line23 Repeat-44-Line24: Erase Multichip Fail CH10 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E1 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value10);
+    /*
+        Erase       CH10  chip0
+        Erase       CH1   chip4
+        Program     CH15  chip0 & chip4
+        Program     CH14  chip4
+        Erase       CH7   chip0
+    */
+
+    QStringList errors = {
+    "Error at Line23 Repeat-44-Line24: Erase Multichip Fail CH10 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E1 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
+    "Error at Line23 Repeat-2031-Line24: Erase Multichip Fail CH1 (Status CH0:E0 E0,CH1:E0 E1,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
+    "Error at Line29 Repeat-2924-Line30: Block Program Multichip Fail CH15 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E1 E1)",
+    "Error at Line23 Repeat-2385-Line24: Block Program Multichip Fail CH14 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E1,CH15:E0 E0)", 
+    "Error at Line23 Repeat-2695-Line24: Erase Multichip Fail CH7 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E1 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)"};
     
-    // CH1 chip 4 - Erase
-    int value1 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "Erase CH1 chip 4: " << value1;
-    map.insert("Error at Line23 Repeat-2031-Line24: Erase Multichip Fail CH1 (Status CH0:E0 E0,CH1:E0 E1,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value1);
+    int iterations = QRandomGenerator::global()->bounded(10);
+    if (iterations == 0)
+    {
+        iterations = 3;
+    }
 
-    // CH15 chip 0 & 4 - Program
-    int value15 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "Program CH15 chip 0 & 4: " << value15;
-    map.insert("Error at Line29 Repeat-2924-Line30: Block Program Multichip Fail CH15 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E1 E1)", value15);
+    for (int i = 0; i < iterations; i++)
+    {
+        int errorType = QRandomGenerator::global()->bounded(errors.size() - 1);
+        QString error = errors[errorType];
 
-    // CH9 chip 0 - Erase
-    int value9 = QRandomGenerator::global()->bounded(100);
-    qInfo() << "Erase CH9 chip 0: " << value9;
-    map.insert("Error at Line23 Repeat-1482-Line24: Erase Multichip Fail CH9 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E1 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)", value9);
+        int count = QRandomGenerator::global()->bounded(100);
+        
+        if (errorType == 0)
+        {
+            if (!(map.count(errorType) > 0))
+            {
+                map[errorType] = count;
+            }
+            else
+            {
+                map[errorType] += count;
+            }            
+        }
+
+        else if (errorType == 1)
+        {
+            if (!(map.count(errorType) > 0))
+            {
+                map[errorType] = count;
+            }
+            else
+            {
+                map[errorType] += count;
+            }       
+        }
+
+        else if (errorType == 2)
+        {
+            if (!(map.count(errorType) > 0))
+            {
+                map[errorType] = count;
+            }
+            else
+            {
+                map[errorType] += count;
+            }            
+        }
+
+        else if (errorType == 3)
+        {
+
+            if (!(map.count(errorType) > 0))
+            {
+                map[errorType] = count;
+            }
+            else
+            {
+                map[errorType] += count;
+            }            
+        }
+
+        else if (errorType == 4)
+        {
+            if (!(map.count(errorType) > 0))
+            {
+                map[errorType] = count;
+            }
+            else
+            {
+                map[errorType] += count;
+            }            
+        }
+        
+    }
+
+    foreach(int key, map.keys())
+    {
+        if (key == 0)
+            qInfo() << "Count of Erase CH10 chip0: " << map[key];
+
+        else if (key == 1)
+            qInfo() << "Count of Erase CH1 chip4: " << map[key];
+
+        else if (key == 2)
+            qInfo() << "Count of Program CH15 chip0 & chip4: " << map[key];
+
+        else if (key == 3)
+            qInfo() << "Count of Program CH14 chip4: " << map[key];
+
+        else if (key == 3)
+            qInfo() << "Count of Erase CH7 chip0: " << map[key];
 
 
+    }
+  
 
     // Remove old report if it exists
     file.remove();
@@ -46,13 +141,12 @@ int main(int argc, char *argv[])
         stream << "SigNAS3 Ver1.8\r\n";
         stream << "Script Execution Result\r\n";
         stream << "\r\n";
-        stream << "Lane : 2\r\n";
-        stream << "Channel : CH0 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8 CH9 CH10 CH11 CH12 CH13 CH14 CH15\r\n";
+        stream << "Lane : 0\r\n";
+        stream << "Channel : CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8 CH9 CH10 CH11 CH12 CH13 CH14 CH15\r\n";
         stream << "Enable(Erase Program Read Dump Compare ErrorCount) : True True True True True True\r\n";
         stream << "Terminate with NAND Fail : False\r\n";
         stream << "Save Error Information to Result File : True\r\n";
-        stream << "\r\n";
-        stream << "Get Data (Line6) CH0 : 98 3C 98 B3 76 72 08 0E\r\n";
+        stream << "\r\n";        
         stream << "Get Data (Line6) CH1 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line6) CH2 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line6) CH3 : 98 3C 98 B3 76 72 08 0E\r\n";
@@ -67,8 +161,7 @@ int main(int argc, char *argv[])
         stream << "Get Data (Line6) CH12 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line6) CH13 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line6) CH14 : 98 3C 98 B3 76 72 08 0E\r\n";
-        stream << "Get Data (Line6) CH15 : 98 3C 98 B3 76 72 08 0E\r\n";
-        stream << "Get Data (Line9) CH0 : 98 3C 98 B3 76 72 08 0E\r\n";
+        stream << "Get Data (Line6) CH15 : 98 3C 98 B3 76 72 08 0E\r\n";        
         stream << "Get Data (Line9) CH1 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line9) CH2 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line9) CH3 : 98 3C 98 B3 76 72 08 0E\r\n";
@@ -85,17 +178,18 @@ int main(int argc, char *argv[])
         stream << "Get Data (Line9) CH14 : 98 3C 98 B3 76 72 08 0E\r\n";
         stream << "Get Data (Line9) CH15 : 98 3C 98 B3 76 72 08 0E\n\r\n";
 
-        foreach(QString str, map.keys())
+        foreach(int key, map.keys())
         {
-            for (int i = 0; i < map[str]; i++)
+
+            for (int i = 0; i < map[key]; i++)
             {
-                stream << str << "\r\n";
+                stream << errors[key] << "\r\n";
             }
         }
     }
 
     // Close after writting
     file.close();
-
+    
     
 }
