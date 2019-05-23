@@ -8,13 +8,14 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication a(argc, argv);
     QString fileName = QString(argv[1]);
 
     //QString fileName = "test.rst";    
     QString currDir = QDir::currentPath();
     QString filePath = currDir + "/" + fileName;
 
-    QCoreApplication a(argc, argv);
+    
     QMap <int, int> map; // <Error code, Count>
     QFile file(filePath);
 
