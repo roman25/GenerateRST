@@ -20,16 +20,16 @@ int main(int argc, char *argv[])
 
     /*
         Erase       CH10  chip0
-        Erase       CH1   chip4
+        Erase       CH1 chip4, CH3 chip0
         Program     CH15  chip0 & chip4
         Program     CH14  chip4
         Erase       CH7   chip0
     */
 
     QStringList errors = {
-    "Error at Line23 Repeat-44-Line24: Erase Multichip Fail CH10 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E1 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
-    "Error at Line23 Repeat-2031-Line24: Erase Multichip Fail CH1 (Status CH0:E0 E0,CH1:E0 E1,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
-    "Error at Line29 Repeat-2924-Line30: Block Program Multichip Fail CH15 (Status CH0:E0 E0,CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E1 E1)",
+    "Error at Line23 Repeat-44-Line24: Erase Multichip Fail CH10 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E1 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
+    "Error at Line23 Repeat-2031-Line24: Erase Multichip Fail CH1 (Status CH1:E0 E1,CH2:E0 E0,CH3:E1 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)",
+    "Error at Line29 Repeat-2924-Line30: Block Program Multichip Fail CH15 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E1 E1)",
     "Error at Line23 Repeat-2385-Line24: Block Program Multichip Fail CH14 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E0 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E1,CH15:E0 E0)", 
     "Error at Line23 Repeat-2695-Line24: Erase Multichip Fail CH7 (Status CH1:E0 E0,CH2:E0 E0,CH3:E0 E0,CH4:E0 E0,CH5:E0 E0,CH6:E0 E0,CH7:E1 E0,CH8:E0 E0,CH9:E0 E0,CH10:E0 E0,CH11:E0 E0,CH12:E0 E0,CH13:E0 E0,CH14:E0 E0,CH15:E0 E0)"};
     
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
             qInfo() << "Count of Erase CH10 chip0: " << map[key];
 
         else if (key == 1)
-            qInfo() << "Count of Erase CH1 chip4: " << map[key];
+            qInfo() << "Count of Erase CH1 chip4 and CH3 chip0: " << map[key];
 
         else if (key == 2)
             qInfo() << "Count of Program CH15 chip0 & chip4: " << map[key];
