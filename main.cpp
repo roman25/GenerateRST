@@ -9,9 +9,9 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    //QString fileName = QString(argv[1]);
+    QString fileName = QString(argv[1]);
 
-    QString fileName = "test.rst";
+    //QString fileName = "test.rst";
     QString currDir = QDir::currentPath();
     QString filePath = currDir + "/" + fileName;
 
